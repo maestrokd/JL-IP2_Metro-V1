@@ -14,7 +14,7 @@ public class Wagon {
     private String type;
 
     private Train train;
-    private Passenger passenger;
+
     LinkedList<Passenger> passengers = new LinkedList<>();
 
     public Wagon(int type) {

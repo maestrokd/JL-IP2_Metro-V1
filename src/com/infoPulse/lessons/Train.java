@@ -3,18 +3,40 @@ package com.infoPulse.lessons;
 import java.util.LinkedList;
 
 public class Train {
+
+    // Fields
+    public static final int maxNumberOfSubwayCarsInTrain = 5;
     private static int count = 1;
 
-    public static final int maxNumberOfSubwayCarsInTrain = 5;
-    LinkedList<Wagon> wagons = new LinkedList<>();
-
-    private String name;
+    private LinkedList<Wagon> wagons = new LinkedList<>();
 
     private int train_id;
-    private Train train;
+    private String name;
+
+    private int line_id;
+    private Line line;
 
     private int driver_id;
     private Driver driver;
+
+
+    // Constructors
+    public Train() {
+        this.name = "Train_" + count++;
+
+        //TODO setID for new train (Database?)
+//        train_id = count-1;
+    }
+
+
+    // Getters and Setters
+    public LinkedList<Wagon> getWagons() {
+        return wagons;
+    }
+
+    public void setWagons(LinkedList<Wagon> wagons) {
+        this.wagons = wagons;
+    }
 
     public String getName() {
         return name;
@@ -22,6 +44,14 @@ public class Train {
 
     public int getTrain_id() {
         return train_id;
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    public void setLine(Line line) {
+        this.line = line;
     }
 
     public int getDriver_id() {
@@ -40,24 +70,12 @@ public class Train {
         this.driver = driver;
     }
 
-    @Override
-    public String toString() {
-        return "Train{" +
-                "wagons=" + wagons +
-                ", train_id=" + train_id +
-                ", driver_id=" + driver_id +
-                '}';
-    }
 
-    public Train() {
-        this.name = "Train_" + count++;
-//        train_id = count-1;
-    }
-
-
+    // Methods
     public void getInfo (){
+        System.out.print(name + " | ");
         for (Wagon wagon : wagons) {
-            System.out.println(wagon.getType());
+            System.out.print(wagon.getType() + " | ");
         }
     }
 
@@ -69,7 +87,8 @@ public class Train {
             return;
         }
         if (Wagon.firstType.equals(wagon.getType())) {
-            if (wagons.size() == 0 ) {
+            if (wagons.size() == 0
+                    || !Wagon.firstType.equals(wagons.getFirst().getType())) {
                 wagon.setTrain(this);
                 wagons.addFirst(wagon);
             } else {
@@ -77,22 +96,29 @@ public class Train {
                 wagons.addLast(wagon);
             }
         } else if (Wagon.secondType.equals(wagon.getType())) {
+
             if (wagons.size() == 0) {
                 wagon.setTrain(this);
-                subwayTrainReturnToDepot.addLast(wagon);
+                wagons.add(0, wagon);
                 return;
             }
-            if ((wagons.size() > 1 && wagons.size() < maxNumberOfSubwayCarsInTrain - 1)
-                    || (wagons.size() == maxNumberOfSubwayCarsInTrain-1
-                    && Wagon.firstType.equals(wagons.get(maxNumberOfSubwayCarsInTrain - 2).getType()))) {
+            if (wagons.size() < 3
+                    || (Wagon.firstType.equals(wagons.getFirst().getType())
+                    && Wagon.firstType.equals(wagons.getLast().getType()))) {
                 wagon.setTrain(this);
                 wagons.add(1, wagon);
-            } else {
-
-
-                // Return of wagon to the subwayTrainReturnToDepot
-                subwayTrainReturnToDepot.addLast(wagon);
+                return;
             }
+            if ((Wagon.firstType.equals(wagons.getFirst().getType())
+                    || Wagon.firstType.equals(wagons.getLast().getType()))
+                    && wagons.size() < 4) {
+                wagon.setTrain(this);
+                wagons.add(1, wagon);
+                return;
+            }
+
+            // Return of wagon to the subwayTrainReturnToDepot
+            subwayTrainReturnToDepot.addLast(wagon);
         }
     }
 }

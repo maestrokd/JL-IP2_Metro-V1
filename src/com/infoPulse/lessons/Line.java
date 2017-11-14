@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 public class Line {
 
+
+    // Fields
     private int line_id;
     private String name;
 
@@ -11,6 +13,7 @@ public class Line {
     LinkedList<Train> trains = new LinkedList<>();
 
 
+    // Constructors
     public Line(String name, int numberOfStations) {
         this.name = name;
 //        this.line_id = line_id;
@@ -19,6 +22,8 @@ public class Line {
         }
     }
 
+
+    // Getters and Setters
     public int getLine_id() {
         return line_id;
     }

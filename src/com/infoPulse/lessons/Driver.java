@@ -5,13 +5,15 @@ import java.util.Random;
 
 public class Driver {
 
-
+    // Fields
     private  int driver_id;
     private String name;
     private float experience;
 
     Random random = new Random();
 
+
+    // Constructors
     public Driver() {}
 
     public Driver(int driver_id, String name, float experience)  {
@@ -20,6 +22,8 @@ public class Driver {
         this.experience = experience;
     }
 
+
+    // Getters and Setters
     public int getDriver_id() {
         return driver_id;
     }
@@ -44,6 +48,8 @@ public class Driver {
         this.experience = experience;
     }
 
+
+    // Methods
     public void addExperience() {
         experience = experience + (random.nextInt(100)-50);
     }

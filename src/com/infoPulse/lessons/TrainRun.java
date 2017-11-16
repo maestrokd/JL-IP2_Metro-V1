@@ -5,6 +5,9 @@ import java.util.Queue;
 public class TrainRun {
 
 
+    // Constructors
+    public TrainRun() {}
+
     public TrainRun(Train train, Queue<Driver> driverQueue) {
         trainRun(train, driverQueue);
     }
@@ -19,7 +22,7 @@ public class TrainRun {
         train.setDriver(driverQueue.poll());
         System.out.println(train.getDriver().getName() + "|" + train.getDriver().getExperience());
 
-        for (Station station : train.getLine().stations) {
+        for (Station station : train.getLine().getStations()) {
             new StationVisit(train, station);
         }
 

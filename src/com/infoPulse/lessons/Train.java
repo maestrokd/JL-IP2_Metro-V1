@@ -1,7 +1,11 @@
 package com.infoPulse.lessons;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.LinkedList;
 
+@DatabaseTable(tableName = "train")
 public class Train {
 
     // Fields
@@ -10,13 +14,20 @@ public class Train {
 
     private LinkedList<Wagon> wagons = new LinkedList<>();
 
+    @DatabaseField(id = true, useGetSet = true)
     private int train_id;
+
+    @DatabaseField(useGetSet = true)
+    private int line_id;
+
+    @DatabaseField(useGetSet = true)
+    private int driver_id;
+
+    @DatabaseField(useGetSet = true)
     private String name;
 
-    private int line_id;
     private Line line;
 
-    private int driver_id;
     private Driver driver;
 
 
@@ -42,8 +53,24 @@ public class Train {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getTrain_id() {
         return train_id;
+    }
+
+    public void setTrain_id(int train_id) {
+        this.train_id = train_id;
+    }
+
+    public int getLine_id() {
+        return line_id;
+    }
+
+    public void setLine_id(int line_id) {
+        this.line_id = line_id;
     }
 
     public Line getLine() {

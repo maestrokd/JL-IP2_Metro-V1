@@ -1,13 +1,23 @@
 package com.infoPulse.lessons;
 
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.Random;
 
+@DatabaseTable(tableName = "driver")
 public class Driver {
 
     // Fields
+
+    @DatabaseField(id = true, useGetSet = true)
     private  int driver_id;
+
+    @DatabaseField(useGetSet = true)
     private String name;
+
+    @DatabaseField(useGetSet = true)
     private float experience;
 
     Random random = new Random();
@@ -16,8 +26,8 @@ public class Driver {
     // Constructors
     public Driver() {}
 
-    public Driver(int driver_id, String name, float experience)  {
-        this.driver_id = driver_id;
+    public Driver(String name, float experience)  {
+
         this.name = name;
         this.experience = experience;
     }
@@ -51,6 +61,6 @@ public class Driver {
 
     // Methods
     public void addExperience() {
-        experience = experience + (random.nextInt(100)-50);
+        experience = experience + (random.nextInt(100)-40);
     }
 }

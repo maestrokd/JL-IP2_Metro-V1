@@ -1,5 +1,6 @@
 package com.infoPulse.lessons;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -23,6 +24,9 @@ public class Depot {
         System.out.println("---------------------------------------");
     }
 
+    public Depot (Collection<Wagon> wagons) {
+        this.wagons.addAll(wagons);
+    }
 
     // Getters and Setters
     public LinkedList<Wagon> getWagons() {

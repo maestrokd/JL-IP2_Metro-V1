@@ -140,7 +140,7 @@ public class Metro {
     public void createDrivers(int numberOfDrivers) {
         System.out.println("---------------------------------------");
         for (int i = 0; i < numberOfDrivers; i++) {
-            driverQueue.add(new Driver(i + 1, "Driver_" + (i+1), 0));
+            driverQueue.add(new Driver("Driver_" + (i+1), 0));
         }
         System.out.println("Number of drivers created: " + driverQueue.size());
         System.out.println("---------------------------------------");
@@ -176,8 +176,8 @@ public class Metro {
         while (!trains.isEmpty()) {
             for (Line line :lines) {
                 if (!trains.isEmpty()) {
-                    line.trains.add(trains.pollFirst());
-                    line.trains.getLast().setLine(line);
+                    line.getTrains().add(trains.pollFirst());
+                    line.getTrains().getLast().setLine(line);
                 }else {
                     break;
                 }
@@ -194,13 +194,28 @@ public class Metro {
 
         for (Line line : lines) {
             System.out.println("______________");
-            System.out.println("Line " + line.getName() + " Number of trains: " + line.trains.size());
+            System.out.println("Line " + line.getName() + " Number of trains: " + line.getTrains().size());
 
-            for (Train train : line.trains) {
+            for (Train train : line.getTrains()) {
                 new TrainRun(train, driverQueue);
             }
             System.out.println("______________");
         }
+        System.out.println("---------------------------------------");
+    }
+
+
+    // Move Wagons from Train at the Lines to Depot
+    public void moveWagonsToDepot(LinkedList<Line> lines, Depot depot) {
+        System.out.println("---------------------------------------");
+        System.out.println("Depot size before moving wagons to Depot: " + depot.getWagons().size());
+        for (Line line : lines) {
+            for (Train train : line.getTrains()) {
+                depot.getWagons().addAll(train.getWagons());
+                train.setWagons(null);
+            }
+        }
+        System.out.println("Depot size after moving wagons to Depot: " + depot.getWagons().size());
         System.out.println("---------------------------------------");
     }
 

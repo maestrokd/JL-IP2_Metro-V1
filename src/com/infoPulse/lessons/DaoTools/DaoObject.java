@@ -5,10 +5,6 @@ import java.util.List;
 
 public interface DaoObject <T> {
 
-    public void createTable();
-
-    public void dropTable();
-
     public int nextId();
 
     public  void add(T object);

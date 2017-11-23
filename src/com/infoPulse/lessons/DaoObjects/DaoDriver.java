@@ -1,43 +1,33 @@
-package com.infoPulse.lessons.DaoTools;
+package com.infoPulse.lessons.DaoObjects;
 
-import com.infoPulse.lessons.Driver;
+import com.infoPulse.lessons.DaoTools.ConnectionSql;
+import com.infoPulse.lessons.DaoTools.DaoObject;
+import com.infoPulse.lessons.DatabaseTableClases.Driver;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.stmt.PreparedUpdate;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-public class DaoDriver implements DaoObject <Driver> {
+public class DaoDriver implements DaoObject<Driver> {
 
     private Dao<Driver, Integer> driverIntegerDao;
 //    private QueryBuilder<Driver, Integer> driverIntegerQueryBuilder;
 
 
     public DaoDriver(){
-        ConnectionSource connectionSource = ConnectionSql.getConnection();
+//        ConnectionSource connectionSource = ConnectionSql.getConnectionSource();
         try {
-            driverIntegerDao = DaoManager.createDao(connectionSource, Driver.class);
+            driverIntegerDao = DaoManager.createDao(ConnectionSql.getInstance().getConnectionSource(), Driver.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 //        driverIntegerQueryBuilder = driverIntegerDao.queryBuilder();
     }
 
-
-    @Override
-    public void createTable() {
-
-    }
-
-    @Override
-    public void dropTable() {
-
-    }
 
     @Override
     public int nextId() {

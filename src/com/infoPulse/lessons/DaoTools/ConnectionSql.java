@@ -7,12 +7,15 @@ import java.sql.SQLException;
 
 public class ConnectionSql {
 
-    private static String login = "maestro";
-    private static String password = "maestro";
-    private static String databaseURL = "jdbc:mysql://localhost/metroless7?" + "user=" + login + "&password=" + password;
+    private static ConnectionSql instance = null;
+
+    private String login = "maestro";
+    private String password = "maestro";
+    private String databaseURL = "jdbc:mysql://localhost/metroless7?" + "user=" + login + "&password=" + password;
+
     private static ConnectionSource connectionSource;
 
-    static {
+    private ConnectionSql() {
         try {
             connectionSource = new JdbcConnectionSource(databaseURL);
         } catch (SQLException e) {
@@ -20,8 +23,15 @@ public class ConnectionSql {
         }
     }
 
-    public static ConnectionSource  getConnection() {
-            return connectionSource;
+    public static ConnectionSql getInstance() {
+        if (instance == null) {
+            instance = new ConnectionSql();
+        }
+        return instance;
+    }
+
+    public ConnectionSource getConnectionSource() {
+        return connectionSource;
     }
 
 }

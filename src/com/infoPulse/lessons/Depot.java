@@ -1,5 +1,7 @@
 package com.infoPulse.lessons;
 
+import com.infoPulse.lessons.DatabaseTableClases.Wagon;
+
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Random;

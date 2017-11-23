@@ -1,4 +1,4 @@
-package com.infoPulse.lessons;
+package com.infoPulse.lessons.DatabaseTableClases;
 
 
 import com.j256.ormlite.field.DatabaseField;
@@ -11,7 +11,7 @@ public class Driver {
 
     // Fields
 
-    @DatabaseField(id = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true)
     private  int driver_id;
 
     @DatabaseField(useGetSet = true)
@@ -20,7 +20,7 @@ public class Driver {
     @DatabaseField(useGetSet = true)
     private float experience;
 
-    Random random = new Random();
+
 
 
     // Constructors
@@ -61,6 +61,9 @@ public class Driver {
 
     // Methods
     public void addExperience() {
-        experience = experience + (random.nextInt(100)-40);
+
+        // TODO Random in other class
+        Random random = new Random();
+        experience = experience + (random.nextInt(100)-50);
     }
 }

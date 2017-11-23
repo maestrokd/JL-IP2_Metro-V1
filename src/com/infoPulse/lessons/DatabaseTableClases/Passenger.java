@@ -1,4 +1,4 @@
-package com.infoPulse.lessons;
+package com.infoPulse.lessons.DatabaseTableClases;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Passenger {
 
     // Fields
-    @DatabaseField(id = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true)
     private int passenger_id;
 
     @DatabaseField(useGetSet = true)

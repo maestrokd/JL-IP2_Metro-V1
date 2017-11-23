@@ -1,12 +1,12 @@
-package com.infoPulse.lessons.DaoTools;
+package com.infoPulse.lessons.DaoObjects;
 
-import com.infoPulse.lessons.Wagon;
+import com.infoPulse.lessons.DaoTools.ConnectionSql;
+import com.infoPulse.lessons.DaoTools.DaoObject;
+import com.infoPulse.lessons.DatabaseTableClases.Wagon;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -18,33 +18,15 @@ public class DaoWagon implements DaoObject<Wagon> {
 
 
     public DaoWagon(){
-        ConnectionSource connectionSource = ConnectionSql.getConnection();
+//        ConnectionSource connectionSource = ConnectionSql.getConnectionSource();
         try {
-            wagonIntegerDao = DaoManager.createDao(connectionSource, Wagon.class);
+            wagonIntegerDao = DaoManager.createDao(ConnectionSql.getInstance().getConnectionSource(), Wagon.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 //        wagonIntegerQueryBuilder = wagonIntegerDao.queryBuilder();
     }
 
-    @Override
-    public void createTable() {
-        try {
-            TableUtils.createTable(wagonIntegerDao);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void dropTable() {
-        try {
-            TableUtils.dropTable(wagonIntegerDao, true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public int nextId() {

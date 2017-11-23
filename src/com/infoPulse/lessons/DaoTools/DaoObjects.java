@@ -1,8 +1,8 @@
 package com.infoPulse.lessons.DaoTools;
 
-import com.infoPulse.lessons.Driver;
-import com.infoPulse.lessons.Train;
-import com.infoPulse.lessons.Wagon;
+import com.infoPulse.lessons.DatabaseTableClases.Driver;
+import com.infoPulse.lessons.DatabaseTableClases.Train;
+import com.infoPulse.lessons.DatabaseTableClases.Wagon;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
@@ -31,7 +31,7 @@ public class DaoObjects {
 
 //    public DaoObjects(ConnectionSource connectionSource) {
     static {
-        ConnectionSource connectionSource = ConnectionSql.getConnection();
+        ConnectionSource connectionSource = ConnectionSql.getInstance().getConnectionSource();
         try {
             driverIntegerDao = DaoManager.createDao(connectionSource, Driver.class);
             trainIntegerDao = DaoManager.createDao(connectionSource, Train.class);

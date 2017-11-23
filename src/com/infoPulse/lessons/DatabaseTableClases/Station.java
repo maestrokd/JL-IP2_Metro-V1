@@ -1,4 +1,4 @@
-package com.infoPulse.lessons;
+package com.infoPulse.lessons.DatabaseTableClases;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -11,7 +11,7 @@ public class Station {
 
     // Fields
 
-    @DatabaseField(id = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true)
     private int station_id;
 
     @DatabaseField(useGetSet = true)
@@ -23,6 +23,8 @@ public class Station {
     private Line line;
 
     private LinkedList<Passenger> passengers = new LinkedList<>();
+
+    private LinkedList<StationVisit> stationVisits = new LinkedList<>();
 
 
     // Constructors
@@ -73,6 +75,14 @@ public class Station {
 
     public void setPassengers(LinkedList<Passenger> passengers) {
         this.passengers = passengers;
+    }
+
+    public LinkedList<StationVisit> getStationVisits() {
+        return stationVisits;
+    }
+
+    public void setStationVisits(LinkedList<StationVisit> stationVisits) {
+        this.stationVisits = stationVisits;
     }
 
     // Methods

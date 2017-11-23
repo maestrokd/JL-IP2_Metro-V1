@@ -1,4 +1,4 @@
-package com.infoPulse.lessons;
+package com.infoPulse.lessons.DatabaseTableClases;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -14,7 +14,7 @@ public class Train {
 
     private LinkedList<Wagon> wagons = new LinkedList<>();
 
-    @DatabaseField(id = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true)
     private int train_id;
 
     @DatabaseField(useGetSet = true)

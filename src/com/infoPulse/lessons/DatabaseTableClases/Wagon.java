@@ -1,4 +1,4 @@
-package com.infoPulse.lessons;
+package com.infoPulse.lessons.DatabaseTableClases;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -15,7 +15,7 @@ public class Wagon {
     public static final String secondType = "Other wagon";
     public static final int maxSize = 330;
 
-    @DatabaseField(id = true, useGetSet = true)
+    @DatabaseField(generatedId = true, useGetSet = true)
     private int wagon_id;
 
     @DatabaseField(useGetSet = true)
@@ -37,7 +37,7 @@ public class Wagon {
 
     public Wagon(int type) {
         this.name = "Wagon " + count++;
-        wagon_id = count-1;
+//        wagon_id = count-1;
         if (type > 65) {
             this.type = firstType;
         }

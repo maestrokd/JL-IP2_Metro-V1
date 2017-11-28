@@ -1,7 +1,5 @@
 package com.infoPulse.lessons;
 
-import com.infoPulse.lessons.DaoObjects.DaoLine;
-import com.infoPulse.lessons.DaoObjects.DaoStation;
 import com.infoPulse.lessons.DatabaseTableClases.*;
 
 import java.util.*;

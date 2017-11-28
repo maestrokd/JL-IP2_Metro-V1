@@ -3,7 +3,7 @@ package com.infoPulse.lessons.DaoTools;
 import java.util.Collection;
 import java.util.List;
 
-public interface DaoObject <T> {
+public interface DaoObjectV2<T, K> {
 
     public int nextId();
 
@@ -15,11 +15,11 @@ public interface DaoObject <T> {
 
     public  void updateAll(Collection<T> objects);
 
-    public  T getForID (int id);
+    public  T getForID(K id);
 
     public  List<T> getAll();
 
-    public void deleteForID(int id);
+    public void deleteForID(K id);
 
     public void deleteAll();
 

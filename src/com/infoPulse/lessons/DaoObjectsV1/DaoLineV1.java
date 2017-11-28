@@ -1,26 +1,30 @@
-package com.infoPulse.lessons.DaoObjects;
+package com.infoPulse.lessons.DaoObjectsV1;
 
 import com.infoPulse.lessons.DaoTools.ConnectionSql;
-import com.infoPulse.lessons.DaoTools.DaoObject;
-import com.infoPulse.lessons.DatabaseTableClases.Station;
+import com.infoPulse.lessons.DatabaseTableClases.Line;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-public class DaoStation implements DaoObject<Station> {
+/**
+ * For Dao Version 1
+ * Class for tests. Don't use!!!
+ * use DaoClasses implements DaoObjectV2
+ */
+@Deprecated
+public class DaoLineV1 implements DaoObjectV1<Line> {
 
-    private Dao<Station, Integer> stationIntegerDao;
+    private Dao<Line, Integer> lineIntegerDao;
 
     // Constructors
-    public DaoStation(){
+    public DaoLineV1(){
 //        ConnectionSource connectionSource = ConnectionSql.getConnectionSource();
         try {
-            stationIntegerDao = DaoManager.createDao(ConnectionSql.getInstance().getConnectionSource(), Station.class);
+            lineIntegerDao = DaoManager.createDao(ConnectionSql.getInstance().getConnectionSource(), Line.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,29 +37,29 @@ public class DaoStation implements DaoObject<Station> {
     }
 
     @Override
-    public void add(Station object) {
+    public void add(Line object) {
 
     }
 
     @Override
-    public void addAll(Collection<Station> objects) {
+    public void addAll(Collection<Line> objects) {
         try {
-            stationIntegerDao.create(objects);
+            lineIntegerDao.create(objects);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void update(Station object) {
+    public void update(Line object) {
 
     }
 
     @Override
-    public void updateAll(Collection<Station> objects) {
-        for (Station station : objects) {
+    public void updateAll(Collection<Line> objects) {
+        for (Line line : objects) {
             try {
-                stationIntegerDao.update(station);
+                lineIntegerDao.update(line);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -63,14 +67,14 @@ public class DaoStation implements DaoObject<Station> {
     }
 
     @Override
-    public Station getForID(int id) {
+    public Line getForID(int id) {
         return null;
     }
 
     @Override
-    public List<Station> getAll() {
+    public List<Line> getAll() {
         try {
-            return stationIntegerDao.queryForAll();
+            return lineIntegerDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -84,9 +88,9 @@ public class DaoStation implements DaoObject<Station> {
 
     @Override
     public void deleteAll() {
-        DeleteBuilder<Station, Integer> stationIntegerDeleteBuilder = stationIntegerDao.deleteBuilder();
+        DeleteBuilder<Line, Integer> lineIntegerDeleteBuilder = lineIntegerDao.deleteBuilder();
         try {
-            stationIntegerDeleteBuilder.delete();
+            lineIntegerDeleteBuilder.delete();
         } catch (SQLException e) {
             e.printStackTrace();
         }

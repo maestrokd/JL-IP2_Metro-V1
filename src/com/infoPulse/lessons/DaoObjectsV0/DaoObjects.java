@@ -1,5 +1,6 @@
-package com.infoPulse.lessons.DaoTools;
+package com.infoPulse.lessons.DaoObjectsV0;
 
+import com.infoPulse.lessons.DaoTools.ConnectionSql;
 import com.infoPulse.lessons.DatabaseTableClases.Driver;
 import com.infoPulse.lessons.DatabaseTableClases.Train;
 import com.infoPulse.lessons.DatabaseTableClases.Wagon;
@@ -15,8 +16,9 @@ import java.util.Queue;
 
 
 /**
+ * For Dao Version 0
  * Class for tests. Don't use!!!
- * use DaoClasses implements DaoObject
+ * use DaoClasses implements DaoObjectV1
  */
 @Deprecated
 public class DaoObjects {
@@ -29,7 +31,7 @@ public class DaoObjects {
     static private QueryBuilder<Wagon, Integer> wagonIntegerQueryBuilder;
 
 
-//    public DaoObjects(ConnectionSource connectionSource) {
+//    public DaoObjectsV1(ConnectionSource connectionSource) {
     static {
         ConnectionSource connectionSource = ConnectionSql.getInstance().getConnectionSource();
         try {

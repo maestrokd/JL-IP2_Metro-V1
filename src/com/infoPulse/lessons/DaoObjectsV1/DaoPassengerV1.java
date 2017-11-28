@@ -1,23 +1,27 @@
-package com.infoPulse.lessons.DaoObjects;
+package com.infoPulse.lessons.DaoObjectsV1;
 
 import com.infoPulse.lessons.DaoTools.ConnectionSql;
-import com.infoPulse.lessons.DaoTools.DaoObject;
 import com.infoPulse.lessons.DatabaseTableClases.Passenger;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-public class DaoPassenger implements DaoObject<Passenger> {
+/**
+ * For Dao Version 1
+ * Class for tests. Don't use!!!
+ * use DaoClasses implements DaoObjectV2
+ */
+@Deprecated
+public class DaoPassengerV1 implements DaoObjectV1<Passenger> {
 
     private Dao<Passenger, Integer> passengerIntegerDao;
 
     // Constructors
-    public DaoPassenger(){
+    public DaoPassengerV1(){
 //        ConnectionSource connectionSource = ConnectionSql.getConnectionSource();
         try {
             passengerIntegerDao = DaoManager.createDao(ConnectionSql.getInstance().getConnectionSource(), Passenger.class);

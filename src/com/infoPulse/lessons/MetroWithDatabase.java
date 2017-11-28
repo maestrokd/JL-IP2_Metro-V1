@@ -1,8 +1,8 @@
 package com.infoPulse.lessons;
 
-import com.infoPulse.lessons.DaoObjects.DaoLine;
-import com.infoPulse.lessons.DaoObjects.DaoStation;
-import com.infoPulse.lessons.DaoTools.DaoObject;
+import com.infoPulse.lessons.DaoObjectsV1.DaoLineV1;
+import com.infoPulse.lessons.DaoObjectsV1.DaoStationV1;
+import com.infoPulse.lessons.DaoObjectsV1.DaoObjectV1;
 import com.infoPulse.lessons.DatabaseTableClases.*;
 
 import java.util.*;
@@ -277,10 +277,10 @@ public class MetroWithDatabase {
     public LinkedList<Line> createAndFillLinesWithDatabase(LinkedList<Train> trains, String[] namesOfLines) {
         LinkedList<Line> lines = new LinkedList<>();
         LinkedList<Station> stations = new LinkedList<>();
-        DaoObject daoObject = new DaoLine();
-        lines.addAll(daoObject.getAll());
-        daoObject = new DaoStation();
-        stations.addAll(daoObject.getAll());
+        DaoObjectV1 daoObjectV1 = new DaoLineV1();
+        lines.addAll(daoObjectV1.getAll());
+        daoObjectV1 = new DaoStationV1();
+        stations.addAll(daoObjectV1.getAll());
 
         int numberOfLines = namesOfLines.length;
 

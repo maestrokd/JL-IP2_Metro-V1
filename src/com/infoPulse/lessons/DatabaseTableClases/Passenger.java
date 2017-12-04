@@ -7,6 +7,8 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Passenger {
 
     // Fields
+    private static int count  = 1;
+
     @DatabaseField(generatedId = true, useGetSet = true)
     private int passenger_id;
 
@@ -25,8 +27,12 @@ public class Passenger {
     @DatabaseField(useGetSet = true)
     private String name;
 
+
     // Constructors
-    public Passenger() {}
+    public Passenger() {
+        this.name = "Passenger_" + count++;
+    }
+
 
     // Getters and Setters
     public int getPassenger_id() {

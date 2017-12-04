@@ -3,6 +3,11 @@ package com.infoPulse.lessons;
 import com.infoPulse.lessons.DaoObjectsV1.*;
 import com.infoPulse.lessons.DaoTools.*;
 import com.infoPulse.lessons.DatabaseTableClases.*;
+import com.infoPulse.lessons.classesForMultiThreading.CreatorPassengers;
+import com.infoPulse.lessons.classesForMultiThreading.Escalator;
+import com.infoPulse.lessons.testForMultiThreading.CreatorPassengersTest;
+import com.infoPulse.lessons.testForMultiThreading.EscalatorTest;
+import com.infoPulse.lessons.testForMultiThreading.StationTest;
 
 import java.util.NoSuchElementException;
 
@@ -10,13 +15,13 @@ public class MainL {
     public static void main(String[] args) throws NoSuchElementException {
 
         // Imitation of the metro without databases
-//        metroWithoutDatabases();
+        metroWithoutDatabases();
 
 
         // Create some Tables in database
 //        createTablesInDatabaseDDL();
 
-        // Upload some results of Metro's work to some Tables in database for test(and for "Imitation of the metro with databases")
+        // Upload some results of Metro's work to some Tables in database for testForMultiThreading(and for "Imitation of the metro with databases")
 //        addTestDataToDatabase();
 
 
@@ -24,12 +29,126 @@ public class MainL {
 //        metroWithDatabases();
 
         // Imitation of the metro with databases version 2
-        metroWithDatabasesV2();
+//        metroWithDatabasesV2();
+
+
+//        StationTest stationTest = new StationTest();
+//        CreatorPassengersTest creatorPassengersTest = new CreatorPassengersTest(stationTest);
+//        EscalatorTest escalatorTest1 = new EscalatorTest("es1", stationTest);
+//        EscalatorTest escalatorTest2 = new EscalatorTest("es2", stationTest);
+//        EscalatorTest escalatorTest3 = new EscalatorTest("es3", stationTest);
+////        creatorPassengersTest.start();
+//        Thread crPass = new Thread(creatorPassengersTest);
+////        escalatorTest1.start();
+//        Thread es1 = new Thread(escalatorTest1);
+////        escalatorTest2.start();
+//        Thread es2 = new Thread(escalatorTest2);
+////        escalatorTest3.start();
+//        Thread es3 = new Thread(escalatorTest3);
+//        crPass.start();
+//        es1.start();
+//        es2.start();
+//        es3.start();
+
+
+//        Station station = new Station();
+//        CreatorPassengers creatorPassengers = new CreatorPassengers(station);
+//        Escalator escalator1 = new Escalator("es1", station);
+//        Escalator escalator2 = new Escalator("es2", station);
+//        Escalator escalator3 = new Escalator("es3", station);
+//        Thread creatorPass = new Thread(creatorPassengers);
+//        Thread escalat1 = new Thread(escalator1);
+//        Thread escalat2 = new Thread(escalator2);
+//        Thread escalat3 = new Thread(escalator3);
+//        creatorPass.start();
+//        escalat1.start();
+//        escalat2.start();
+//        escalat3.start();
+
+
+
+        // Imitation of the metro without databases. multithreading
+//        metroWithoutDatabasesMulti();
+
 
 
 
 
     }
+
+
+     //Imitation of the metro without databases
+    public static void metroWithoutDatabasesMulti() {
+
+        MetroWithoutDatabaseMultiThread metro = new MetroWithoutDatabaseMultiThread();
+
+        metro.createWagonsInDepot(100);
+
+        // Collect the Trains from wagons in Depot
+        metro.collectTrains(metro.getDepot(), metro.getTrains());
+
+        // Inspection of assembled trains
+        metro.inspectionOfAssembledTrains(metro.getTrains());
+
+        // Inspection of depot after Collect the Trains from wagons in Depot
+        metro.inspectionOfDepot(metro.getDepot());
+
+        metro.inspectionOfWagonsInDepot(metro.getDepot());
+
+        // Create Drivers
+        metro.createDrivers(20);
+
+        // List of Line names and number of Lines (number of names)
+        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
+
+        // Create Lines and filling lines with trains
+        metro.setLines(metro.createAndFillLines(metro.getTrains(), namesOfLines));
+
+        // Drivers travel on lines by trains
+//        metro.travelByStations(metro.getLines(), metro.getDriverQueue());
+        metro.travelMulti(metro.getLines(), metro.getDriverQueue());
+
+
+//        // List of drivers' experience
+        metro.showListOfDriverExperience(metro.getDriverQueue());
+//
+//
+//        // Move Wagons from Train at the Lines to Depot
+//        metro.moveWagonsToDepot(metro.getLines(), metro.getDepot());
+//
+//
+//
+//
+//
+//        // TODO in other method and refactor
+        for (Line line : metro.getLines()) {
+
+            System.out.print(line.getName() + "|");
+            for (TrainRun trainRun : line.getTrainRuns()) {
+                System.out.print(trainRun.getTrain().getName() + " - " + trainRun.getDriver().getName() + " - " + trainRun.getStartDate() + "|");
+            }
+            System.out.println();
+//            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
+
+            for (Station station : line.getStations()) {
+
+                System.out.print(line.getName() + "|");
+                for (StationVisit stationVisit : station.getStationVisits()) {
+                    System.out.println(stationVisit.getVisitDate() + " - "  + stationVisit.getStation().getName() + " - "  + stationVisit.getTrainRun().getTrain().getName() + "|");
+                    System.out.println(stationVisit.getVisitInfo());
+                }
+                System.out.println();
+            }
+        }
+
+
+
+    }
+
+
+
+
+
 
 
     // Imitation of the metro without databases
@@ -182,8 +301,8 @@ public class MainL {
         }
 
 
-        // TODO delete this test after changing the table structure
-        // For test changing the table structure
+        // TODO delete this testForMultiThreading after changing the table structure
+        // For testForMultiThreading changing the table structure
 //        DaoObjectsDDL daoObjectsDDL = new DaoObjectsDDL();
 //
 //        daoObjectsDDL.dropTableTrainRun();
@@ -301,8 +420,8 @@ public class MainL {
         }
 
 
-        // TODO delete this test after changing the table structure
-        // For test changing the table structure
+        // TODO delete this testForMultiThreading after changing the table structure
+        // For testForMultiThreading changing the table structure
 //        DaoObjectsDDL daoObjectsDDL = new DaoObjectsDDL();
 //
 //        daoObjectsDDL.dropTableTrainRun();

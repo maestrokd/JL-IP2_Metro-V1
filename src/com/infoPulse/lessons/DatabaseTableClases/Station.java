@@ -22,6 +22,8 @@ public class Station {
 
     private Line line;
 
+    private LinkedList<Passenger> passengersAtHall = new LinkedList<>();
+
     private LinkedList<Passenger> passengers = new LinkedList<>();
 
     private LinkedList<StationVisit> stationVisits = new LinkedList<>();
@@ -67,6 +69,14 @@ public class Station {
 
     public void setLine(Line line) {
         this.line = line;
+    }
+
+    public LinkedList<Passenger> getPassengersAtHall() {
+        return passengersAtHall;
+    }
+
+    public void setPassengersAtHall(LinkedList<Passenger> passengersAtHall) {
+        this.passengersAtHall = passengersAtHall;
     }
 
     public LinkedList<Passenger> getPassengers() {

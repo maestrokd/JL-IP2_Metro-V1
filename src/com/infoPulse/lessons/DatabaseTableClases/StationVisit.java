@@ -33,6 +33,8 @@ public class StationVisit {
     @DatabaseField(useGetSet = true)
     private String station_name;
 
+    private String visitInfo = "";
+
 
     // Constructors
     public StationVisit() {}
@@ -130,6 +132,10 @@ public class StationVisit {
         this.station_name = station_name;
     }
 
+    public String getVisitInfo() {
+        return visitInfo;
+    }
+
     // Methods
     // If station not last
     public void stationVisit(Train train, Station station) {
@@ -137,18 +143,21 @@ public class StationVisit {
         int countPassenger;
         int numberOfPassengersToOut;
         Random random = new Random();
+//        String visitInfo = "";
 
 
-        // Create passengers in station
+        // TODO Create passengers in station for One Thread
         for (int i = 0; i < (random.nextInt(400) + 800); i++) {
             station.getPassengers().add(new Passenger());
         }
 
-        System.out.println();
-        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers are ready to go");
+//        System.out.println();
+//        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers are ready to go");
+        visitInfo += "\n" + station.getInfo() + " | " + station.getPassengers().size() + " passengers are ready to go\n";
 
         for (Wagon wagon : train.getWagons()) {
-            System.out.print(wagon.getName() + " | " + wagon.getPassengers().size() + " | ");
+//            System.out.print(wagon.getName() + " | " + wagon.getPassengers().size() + " | ");
+            visitInfo += wagon.getName() + " | " + wagon.getPassengers().size() + " | ";
 
 
             // Moving the passengers from the Wagon
@@ -163,9 +172,11 @@ public class StationVisit {
 //                    countPassenger++;
                 }
 
-                System.out.print(numberOfPassengersToOut + " -->> out | ");
+//                System.out.print(numberOfPassengersToOut + " -->> out | ");
+                visitInfo += numberOfPassengersToOut + " -->> out | ";
             } else {
-                System.out.print("0 -->> out | ");
+//                System.out.print("0 -->> out | ");
+                visitInfo += "0 -->> out | ";
             }
 
 
@@ -176,10 +187,15 @@ public class StationVisit {
                 countPassenger++;
             }
             passengersIn += countPassenger;
-            System.out.print("in <<-- " + countPassenger + " | ");
-            System.out.println(wagon.getName() + " | " + wagon.getPassengers().size());
+//            System.out.print("in <<-- " + countPassenger + " | ");
+            visitInfo += "in <<-- " + countPassenger + " | ";
+//            System.out.println(wagon.getName() + " | " + wagon.getPassengers().size());
+            visitInfo += wagon.getName() + " | " + wagon.getPassengers().size() + "\n";
         }
-        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers left at the station");
+//        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers left at the station");
+        visitInfo += station.getInfo() + " | " + station.getPassengers().size() + " passengers left at the station";
+
+        System.out.println(visitInfo);
     }
 
 
@@ -187,12 +203,15 @@ public class StationVisit {
     public void lastStationVisit(Train train, Station station) {
 
         int numberOfPassengersToOut;
+//        String visitInfo = "";
 
-        System.out.println();
-        System.out.println(station.getInfo() + " | Last station! |" + station.getPassengers().size() + " passengers who finished the trip");
+//        System.out.println();
+//        System.out.println(station.getInfo() + " | Last station! |" + station.getPassengers().size() + " passengers who finished the trip");
+        visitInfo += "\n" + station.getInfo() + " | Last station! |" + station.getPassengers().size() + " passengers who finished the trip\n";
 
         for (Wagon wagon : train.getWagons()) {
-            System.out.print(wagon.getName() + " | " + wagon.getPassengers().size() + " | ");
+//            System.out.print(wagon.getName() + " | " + wagon.getPassengers().size() + " | ");
+            visitInfo += wagon.getName() + " | " + wagon.getPassengers().size() + " | ";
 
 
             // Moving the passengers from the Wagon
@@ -201,13 +220,19 @@ public class StationVisit {
                 passengersOut += numberOfPassengersToOut;
                 station.getPassengers().addAll(wagon.getPassengers());
                 wagon.getPassengers().clear();
-                System.out.print(numberOfPassengersToOut + " -->> out | ");
+//                System.out.print(numberOfPassengersToOut + " -->> out | ");
+                visitInfo += numberOfPassengersToOut + " -->> out | ";
             } else {
-                System.out.print("0 -->> out | ");
+//                System.out.print("0 -->> out | ");
+                visitInfo += "0 -->> out | ";
             }
-            System.out.println(wagon.getName() + " | " + wagon.getPassengers().size());
+//            System.out.println(wagon.getName() + " | " + wagon.getPassengers().size());
+            visitInfo += wagon.getName() + " | " + wagon.getPassengers().size() + "\n";
         }
-        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers who finished the trip");
+//        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers who finished the trip");
+        visitInfo += station.getInfo() + " | " + station.getPassengers().size() + " passengers who finished the trip\n";
+
+        System.out.println(visitInfo);
     }
 
 }

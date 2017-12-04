@@ -47,8 +47,12 @@ public class TrainRun {
     public TrainRun(Train train, Queue<Driver> driverQueue) {
 
         // Moving the driver to the train
+
+        synchronized (driverQueue) {
         train.setDriver(driverQueue.poll());
         System.out.println(train.getDriver().getName() + "|" + train.getDriver().getExperience());
+        }
+
 
         this.driver = train.getDriver();
         this.line = train.getLine();
@@ -72,10 +76,14 @@ public class TrainRun {
         trainRun();
 
         // Get driving experience and Moving the driver from the Train
+
+        synchronized (driverQueue) {
         train.getDriver().addExperience();
         System.out.println(train.getDriver().getName() + "|" + train.getDriver().getExperience());
         driverQueue.add(train.getDriver());
         train.setDriver(null);
+        }
+
     }
 
 
@@ -159,10 +167,18 @@ public class TrainRun {
     // Methods
     public void trainRun() {
 //        System.out.println();
-        System.out.println(train.getName() + " rode along the " + line.getName() + " Line");
+//        System.out.println(train.getName() + " rode along the " + line.getName() + " Line");
 
         for (Station station : line.getStations()) {
             new StationVisit(this, station);
+
+            // TODO for multithread
+//            try {
+//                Thread.sleep(4000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
         }
 
     }

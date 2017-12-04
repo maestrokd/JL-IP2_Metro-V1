@@ -15,7 +15,7 @@ public class MainL {
     public static void main(String[] args) throws NoSuchElementException {
 
         // Imitation of the metro without databases
-        metroWithoutDatabases();
+//        metroWithoutDatabases();
 
 
         // Create some Tables in database
@@ -68,7 +68,7 @@ public class MainL {
 
 
         // Imitation of the metro without databases. multithreading
-//        metroWithoutDatabasesMulti();
+        metroWithoutDatabasesMulti();
 
 
 

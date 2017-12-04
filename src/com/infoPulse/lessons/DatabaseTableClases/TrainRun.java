@@ -173,11 +173,11 @@ public class TrainRun {
             new StationVisit(this, station);
 
             // TODO for multithread
-//            try {
-//                Thread.sleep(4000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
 

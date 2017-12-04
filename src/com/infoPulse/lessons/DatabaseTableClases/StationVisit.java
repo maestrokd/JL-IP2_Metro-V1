@@ -146,10 +146,6 @@ public class StationVisit {
 //        String visitInfo = "";
 
 
-        // TODO Create passengers in station for One Thread
-        for (int i = 0; i < (random.nextInt(400) + 800); i++) {
-            station.getPassengers().add(new Passenger());
-        }
 
 //        System.out.println();
 //        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers are ready to go");

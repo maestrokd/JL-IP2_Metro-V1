@@ -28,31 +28,49 @@ public class TravellerForLine implements Runnable {
 
         LinkedList<Thread> threadsTravellersT = new LinkedList<>();
 
-        for (Train train : line.getTrains()) {
+         do {
+
+            for (Train train : line.getTrains()) {
 //            new TrainRun(train, driverQueue);
-            TravellerForTrain travellerForTrain = new TravellerForTrain(train.getName() + "/" + "travellerT", train, driverQueue);
-            Thread travellerT = new Thread(travellerForTrain);
-            travellerT.start();
 
-            threadsTravellersT.add(travellerT);
 
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                TravellerForTrain travellerForTrain = new TravellerForTrain(train.getName() + "/" + "travellerT", train, driverQueue);
+                Thread travellerT = new Thread(travellerForTrain);
+                travellerT.start();
+
+                threadsTravellersT.add(travellerT);
+
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
 
-        }
+            // Wait when first train finish his travel
+             try {
+                 threadsTravellersT.getFirst().join();
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+             threadsTravellersT.clear();
 
-        for (Thread thread : threadsTravellersT) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+            // Show number of passengers at the last station after the next travel of all trains along the line
+             System.out.println(line.getStations().getLast().getPassengers().size() + " at the last station " + line.getName());
+             System.out.println();
 
-        System.out.println("______________");
+         } while (true);
+
+//        for (Thread thread : threadsTravellersT) {
+//            try {
+//                thread.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        System.out.println("______________");
 
     }
 }

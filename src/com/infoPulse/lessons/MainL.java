@@ -1,14 +1,16 @@
 package com.infoPulse.lessons;
 
-import com.infoPulse.lessons.DaoObjectsV1.*;
+
 import com.infoPulse.lessons.DaoTools.*;
 import com.infoPulse.lessons.DatabaseTableClases.*;
 import com.infoPulse.lessons.classesForMultiThreading.CreatorPassengers;
 import com.infoPulse.lessons.classesForMultiThreading.Escalator;
+import com.infoPulse.lessons.classesForMultiThreading.TravellerForTrain;
 import com.infoPulse.lessons.testForMultiThreading.CreatorPassengersTest;
 import com.infoPulse.lessons.testForMultiThreading.EscalatorTest;
 import com.infoPulse.lessons.testForMultiThreading.StationTest;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.NoSuchElementException;
 
 public class MainL {
@@ -25,52 +27,14 @@ public class MainL {
 //        addTestDataToDatabase();
 
 
-        // Imitation of the metro with databases
-//        metroWithDatabases();
-
         // Imitation of the metro with databases version 2
 //        metroWithDatabasesV2();
 
-
-//        StationTest stationTest = new StationTest();
-//        CreatorPassengersTest creatorPassengersTest = new CreatorPassengersTest(stationTest);
-//        EscalatorTest escalatorTest1 = new EscalatorTest("es1", stationTest);
-//        EscalatorTest escalatorTest2 = new EscalatorTest("es2", stationTest);
-//        EscalatorTest escalatorTest3 = new EscalatorTest("es3", stationTest);
-////        creatorPassengersTest.start();
-//        Thread crPass = new Thread(creatorPassengersTest);
-////        escalatorTest1.start();
-//        Thread es1 = new Thread(escalatorTest1);
-////        escalatorTest2.start();
-//        Thread es2 = new Thread(escalatorTest2);
-////        escalatorTest3.start();
-//        Thread es3 = new Thread(escalatorTest3);
-//        crPass.start();
-//        es1.start();
-//        es2.start();
-//        es3.start();
-
-
-//        Station station = new Station();
-//        CreatorPassengers creatorPassengers = new CreatorPassengers(station);
-//        Escalator escalator1 = new Escalator("es1", station);
-//        Escalator escalator2 = new Escalator("es2", station);
-//        Escalator escalator3 = new Escalator("es3", station);
-//        Thread creatorPass = new Thread(creatorPassengers);
-//        Thread escalat1 = new Thread(escalator1);
-//        Thread escalat2 = new Thread(escalator2);
-//        Thread escalat3 = new Thread(escalator3);
-//        creatorPass.start();
-//        escalat1.start();
-//        escalat2.start();
-//        escalat3.start();
 
 
 
         // Imitation of the metro without databases. multithreading
         metroWithoutDatabasesMulti();
-
-
 
 
 
@@ -82,27 +46,10 @@ public class MainL {
 
         MetroWithoutDatabaseMultiThread metro = new MetroWithoutDatabaseMultiThread();
 
-        metro.createWagonsInDepot(100);
-
-        // Collect the Trains from wagons in Depot
-        metro.collectTrains(metro.getDepot(), metro.getTrains());
-
-        // Inspection of assembled trains
-        metro.inspectionOfAssembledTrains(metro.getTrains());
-
-        // Inspection of depot after Collect the Trains from wagons in Depot
-        metro.inspectionOfDepot(metro.getDepot());
-
-        metro.inspectionOfWagonsInDepot(metro.getDepot());
 
         // Create Drivers
         metro.createDrivers(20);
 
-        // List of Line names and number of Lines (number of names)
-        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
-
-        // Create Lines and filling lines with trains
-        metro.setLines(metro.createAndFillLines(metro.getTrains(), namesOfLines));
 
         // Drivers travel on lines by trains
 //        metro.travelByStations(metro.getLines(), metro.getDriverQueue());
@@ -121,225 +68,155 @@ public class MainL {
 //
 //
 //        // TODO in other method and refactor
-        for (Line line : metro.getLines()) {
-
-            System.out.print(line.getName() + "|");
-            for (TrainRun trainRun : line.getTrainRuns()) {
-                System.out.print(trainRun.getTrain().getName() + " - " + trainRun.getDriver().getName() + " - " + trainRun.getStartDate() + "|");
-            }
-            System.out.println();
-//            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
-
-            for (Station station : line.getStations()) {
-
-                System.out.print(line.getName() + "|");
-                for (StationVisit stationVisit : station.getStationVisits()) {
-                    System.out.println(stationVisit.getVisitDate() + " - "  + stationVisit.getStation().getName() + " - "  + stationVisit.getTrainRun().getTrain().getName() + "|");
-                    System.out.println(stationVisit.getVisitInfo());
-                }
-                System.out.println();
-            }
-        }
-
-
-
-    }
-
-
-
-
-
-
-
-    // Imitation of the metro without databases
-    public static void metroWithoutDatabases() {
-
-        Metro metro = new Metro();
-
-        metro.createWagonsInDepot(100);
-
-        // Collect the Trains from wagons in Depot
-        metro.collectTrains(metro.getDepot(), metro.getTrains());
-
-        // Inspection of assembled trains
-        metro.inspectionOfAssembledTrains(metro.getTrains());
-
-        // Inspection of depot after Collect the Trains from wagons in Depot
-        metro.inspectionOfDepot(metro.getDepot());
-
-        metro.inspectionOfWagonsInDepot(metro.getDepot());
-
-        // Create Drivers
-        metro.createDrivers(10);
-
-        // List of Line names and number of Lines (number of names)
-        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
-
-        // Create Lines and filling lines with trains
-        metro.setLines(metro.createAndFillLines(metro.getTrains(), namesOfLines));
-
-        // Drivers travel on lines by trains
-        metro.travelByStations(metro.getLines(), metro.getDriverQueue());
-
-        // List of drivers' experience
-        metro.showListOfDriverExperience(metro.getDriverQueue());
-
-
-        // Move Wagons from Train at the Lines to Depot
-        metro.moveWagonsToDepot(metro.getLines(), metro.getDepot());
-
-
-
-
-
-        // TODO in other method and refactor
-        for (Line line : metro.getLines()) {
-
-            System.out.print(line.getName() + "|");
-            for (TrainRun trainRun : line.getTrainRuns()) {
-                System.out.print(trainRun.getTrain().getName() + " - " + trainRun.getDriver().getName() + " - " + trainRun.getStartDate() + "|");
-            }
-            System.out.println();
-//            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
-
-            for (Station station : line.getStations()) {
-
-                System.out.print(line.getName() + "|");
-                for (StationVisit stationVisit : station.getStationVisits()) {
-                    System.out.print(stationVisit.getVisitDate() + " - "  + stationVisit.getStation().getName() + " - "  + stationVisit.getTrainRun().getTrain().getName() + "|");
-                }
-                System.out.println();
-            }
-        }
-
-
-
-    }
-
-
-    // Imitation of the metro with databases
-    public static void metroWithDatabases() {
-
-        // TODO in other method
-        // Verifying the connection to the database
-        if (ConnectionSql.getInstance().getConnectionSource() == null) {
-            System.out.println("No Connection with database!!!");
-            return;
-        }
-
-        DaoObjectV1 daoObjectV1;
-        MetroWithDatabase metro = new MetroWithDatabase();
-
-
-        // Upload Wagons from database to Depot
-        daoObjectV1 = new DaoWagonV1();
-        metro.setDepot(new Depot(daoObjectV1.getAll()));
-
-
-        // Upload Trains from database to Metro
-        daoObjectV1 = new DaoTrainV1();
-        metro.getTrains().addAll(daoObjectV1.getAll());
-
-
-        // Collect the Trains from wagons in Depot
-        metro.collectTrainsWithDatabase(metro.getDepot(), metro.getTrains());
-
-        // Inspection of assembled trains
-        metro.inspectionOfAssembledTrains(metro.getTrains());
-
-        // Inspection of depot after Collect the Trains from wagons in Depot
-        metro.inspectionOfDepot(metro.getDepot());
-
-        metro.inspectionOfWagonsInDepot(metro.getDepot());
-
-
-        // Upload Drivers from database
-        daoObjectV1 = new DaoDriverV1();
-        metro.getDriverQueue().addAll(daoObjectV1.getAll());
-
-        // List of Line names and number of Lines (number of names)
-        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
-
-        // Create Lines and filling lines with trains
-        metro.setLines(metro.createAndFillLinesWithDatabase(metro.getTrains(), namesOfLines));
-
-        // Drivers travel on lines by trains
-        metro.travelByStations(metro.getLines(), metro.getDriverQueue());
-
-        // List of drivers' experience
-        metro.showListOfDriverExperience(metro.getDriverQueue());
-
-//        // Move Wagons from Train at the Lines to Depot
-//        metro.moveWagonsToDepot(metro.getLines(), metro.getDepot());
-
-
-
-
-
-
-
-
-        // TODO in other method
-        // Print TrainRuns and StationVisits
-        for (Line line : metro.getLines()) {
-
-            System.out.print(line.getName() + "|");
-            for (TrainRun trainRun : line.getTrainRuns()) {
-                System.out.print(trainRun.getTrain_id() + " - " + trainRun.getDriver_id() + " - " + trainRun.getStartDate() + "|");
-            }
-            System.out.println();
-//            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
-
-            for (Station station : line.getStations()) {
-
-                System.out.print(line.getName() + "|");
-                for (StationVisit stationVisit : station.getStationVisits()) {
-                    System.out.print(stationVisit.getVisitDate() + " - "  + stationVisit.getStation_id() + "|");
-                }
-                System.out.println();
-            }
-        }
-
-
-        // TODO delete this testForMultiThreading after changing the table structure
-        // For testForMultiThreading changing the table structure
-//        DaoObjectsDDL daoObjectsDDL = new DaoObjectsDDL();
+//        for (Line line : metro.getLines()) {
 //
-//        daoObjectsDDL.dropTableTrainRun();
-//        daoObjectsDDL.createTableTrainRun();
+//            System.out.print(line.getName() + "|");
+//            for (TrainRun trainRun : line.getTrainRuns()) {
+//                System.out.print(trainRun.getTrain().getName() + " - " + trainRun.getDriver().getName() + " - " + trainRun.getStartDate() + "|");
+//            }
+//            System.out.println();
+////            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
 //
-//        daoObjectsDDL.dropTableStationVisit();
-//        daoObjectsDDL.createTableStationVisit();
+//            for (Station station : line.getStations()) {
+//
+//                System.out.print(line.getName() + "|");
+//                for (StationVisit stationVisit : station.getStationVisits()) {
+//                    System.out.println(stationVisit.getVisitDate() + " - "  + stationVisit.getStation().getName() + " - "  + stationVisit.getTrainRun().getTrain().getName() + "|");
+//                    System.out.println(stationVisit.getVisitInfo());
+//                }
+//                System.out.println();
+//            }
+//        }
 
-
-        // TODO in other method
-        // Update TrainRun in database
-        DaoTrainRunV1 daoTrainRun = new DaoTrainRunV1();
-        for (Line line : metro.getLines()) {
-            daoTrainRun.addAll(line.getTrainRuns());
-//            daoTrainRun.updateAll(line.getTrainRuns());
-        }
-
-
-        // TODO in other method
-        // Update StationVisit from Depot in database
-        DaoStationVisitV1 daoStationVisit = new DaoStationVisitV1();
-        for (Line line : metro.getLines()) {
-            for (Station station : line.getStations()) {
-                daoStationVisit.addAll(station.getStationVisits());
-//                daoStationVisit.updateAll(station.getStationVisits());
-            }
-        }
-
-        updateClassesInDatabase(metro);
 
 
     }
+
+
+
 
 
     // Imitation of the metro with databases V2 with DaoObjectV2 and DaoGenericV2
     public static void metroWithDatabasesV2() {
 
+//
+//        // Verifying the connection to the database
+//        if (!isConnection()) {
+//            return;
+//        }
+//
+//        DaoObjectV2 daoObjectV2;
+//        MetroWithDatabase metro = new MetroWithDatabase();
+//
+//
+//        // Upload Wagons from database to Depot
+//        daoObjectV2 = new DaoGenericV2(Wagon.class, Integer.class);
+//        metro.setDepot(new Depot(daoObjectV2.getAll()));
+//
+//
+//        // Upload Trains from database to Metro
+//        daoObjectV2 = new DaoGenericV2(Train.class, Integer.class);
+//        metro.getTrains().addAll(daoObjectV2.getAll());
+//
+//
+//        // Collect the Trains from wagons in Depot
+//        metro.collectTrainsWithDatabase(metro.getDepot(), metro.getTrains());
+//
+//        // Inspection of assembled trains
+//        metro.inspectionOfAssembledTrains(metro.getTrains());
+//
+//        // Inspection of depot after Collect the Trains from wagons in Depot
+//        metro.inspectionOfDepot(metro.getDepot());
+//
+//        metro.inspectionOfWagonsInDepot(metro.getDepot());
+//
+//
+//        // Upload Drivers from database
+//        daoObjectV2 = new DaoGenericV2(Driver.class, Integer.class);
+//        metro.getDriverQueue().addAll(daoObjectV2.getAll());
+//
+//        // List of Line names and number of Lines (number of names)
+//        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
+//
+//        // Create Lines and filling lines with trains
+//        metro.setLines(metro.createAndFillLinesWithDatabase(metro.getTrains(), namesOfLines));
+//
+//        // Drivers travel on lines by trains
+//        metro.travelByStations(metro.getLines(), metro.getDriverQueue());
+//
+//        // List of drivers' experience
+//        metro.showListOfDriverExperience(metro.getDriverQueue());
+//
+////        // Move Wagons from Train at the Lines to Depot
+////        metro.moveWagonsToDepot(metro.getLines(), metro.getDepot());
+//
+//
+//
+//
+//
+//
+//
+//
+//        // TODO in other method
+//        // Print TrainRuns and StationVisits
+//        for (Line line : metro.getLines()) {
+//
+//            System.out.print(line.getName() + "|");
+//            for (TrainRun trainRun : line.getTrainRuns()) {
+//                System.out.print(trainRun.getTrain_id() + " - " + trainRun.getDriver_id() + " - " + trainRun.getStartDate() + "|");
+//            }
+//            System.out.println();
+////            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
+//
+//            for (Station station : line.getStations()) {
+//
+//                System.out.print(line.getName() + "|");
+//                for (StationVisit stationVisit : station.getStationVisits()) {
+//                    System.out.print(stationVisit.getVisitDate() + " - "  + stationVisit.getStation_id() + "|");
+//                }
+//                System.out.println();
+//            }
+//        }
+//
+//
+//        // TODO delete this testForMultiThreading after changing the table structure
+//        // For testForMultiThreading changing the table structure
+////        DaoObjectsDDL daoObjectsDDL = new DaoObjectsDDL();
+////
+////        daoObjectsDDL.dropTableTrainRun();
+////        daoObjectsDDL.createTableTrainRun();
+////
+////        daoObjectsDDL.dropTableStationVisit();
+////        daoObjectsDDL.createTableStationVisit();
+//
+//
+//        // TODO in other method
+//        // Update TrainRun in database
+//        DaoTrainRunV1 daoTrainRun = new DaoTrainRunV1();
+//        for (Line line : metro.getLines()) {
+//            daoTrainRun.addAll(line.getTrainRuns());
+////            daoTrainRun.updateAll(line.getTrainRuns());
+//        }
+//
+//
+//        // TODO in other method
+//        // Update StationVisit from Depot in database
+//        DaoStationVisitV1 daoStationVisit = new DaoStationVisitV1();
+//        for (Line line : metro.getLines()) {
+//            for (Station station : line.getStations()) {
+//                daoStationVisit.addAll(station.getStationVisits());
+////                daoStationVisit.updateAll(station.getStationVisits());
+//            }
+//        }
+//
+//        updateClassesInDatabase(metro);
+//
+
+    }
+
+
+    // Upload some results of Metro's work to some Tables in database
+    public static void addTestDataToDatabase() {
 
         // Verifying the connection to the database
         if (!isConnection()) {
@@ -347,185 +224,60 @@ public class MainL {
         }
 
         DaoObjectV2 daoObjectV2;
-        MetroWithDatabase metro = new MetroWithDatabase();
+        MetroWithoutDatabaseMultiThread metro = new MetroWithoutDatabaseMultiThread();
 
-
-        // Upload Wagons from database to Depot
-        daoObjectV2 = new DaoGenericV2(Wagon.class, Integer.class);
-        metro.setDepot(new Depot(daoObjectV2.getAll()));
-
-
-        // Upload Trains from database to Metro
-        daoObjectV2 = new DaoGenericV2(Train.class, Integer.class);
-        metro.getTrains().addAll(daoObjectV2.getAll());
-
-
-        // Collect the Trains from wagons in Depot
-        metro.collectTrainsWithDatabase(metro.getDepot(), metro.getTrains());
-
-        // Inspection of assembled trains
-        metro.inspectionOfAssembledTrains(metro.getTrains());
-
-        // Inspection of depot after Collect the Trains from wagons in Depot
-        metro.inspectionOfDepot(metro.getDepot());
-
-        metro.inspectionOfWagonsInDepot(metro.getDepot());
-
-
-        // Upload Drivers from database
-        daoObjectV2 = new DaoGenericV2(Driver.class, Integer.class);
-        metro.getDriverQueue().addAll(daoObjectV2.getAll());
-
-        // List of Line names and number of Lines (number of names)
-        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
-
-        // Create Lines and filling lines with trains
-        metro.setLines(metro.createAndFillLinesWithDatabase(metro.getTrains(), namesOfLines));
-
-        // Drivers travel on lines by trains
-        metro.travelByStations(metro.getLines(), metro.getDriverQueue());
-
-        // List of drivers' experience
-        metro.showListOfDriverExperience(metro.getDriverQueue());
-
-//        // Move Wagons from Train at the Lines to Depot
-//        metro.moveWagonsToDepot(metro.getLines(), metro.getDepot());
-
-
-
-
-
-
-
-
-        // TODO in other method
-        // Print TrainRuns and StationVisits
-        for (Line line : metro.getLines()) {
-
-            System.out.print(line.getName() + "|");
-            for (TrainRun trainRun : line.getTrainRuns()) {
-                System.out.print(trainRun.getTrain_id() + " - " + trainRun.getDriver_id() + " - " + trainRun.getStartDate() + "|");
-            }
-            System.out.println();
-//            System.out.println(line.getName() + "|" + line.getTrainRuns().get);
-
-            for (Station station : line.getStations()) {
-
-                System.out.print(line.getName() + "|");
-                for (StationVisit stationVisit : station.getStationVisits()) {
-                    System.out.print(stationVisit.getVisitDate() + " - "  + stationVisit.getStation_id() + "|");
-                }
-                System.out.println();
-            }
-        }
-
-
-        // TODO delete this testForMultiThreading after changing the table structure
-        // For testForMultiThreading changing the table structure
-//        DaoObjectsDDL daoObjectsDDL = new DaoObjectsDDL();
-//
-//        daoObjectsDDL.dropTableTrainRun();
-//        daoObjectsDDL.createTableTrainRun();
-//
-//        daoObjectsDDL.dropTableStationVisit();
-//        daoObjectsDDL.createTableStationVisit();
-
-
-        // TODO in other method
-        // Update TrainRun in database
-        DaoTrainRunV1 daoTrainRun = new DaoTrainRunV1();
-        for (Line line : metro.getLines()) {
-            daoTrainRun.addAll(line.getTrainRuns());
-//            daoTrainRun.updateAll(line.getTrainRuns());
-        }
-
-
-        // TODO in other method
-        // Update StationVisit from Depot in database
-        DaoStationVisitV1 daoStationVisit = new DaoStationVisitV1();
-        for (Line line : metro.getLines()) {
-            for (Station station : line.getStations()) {
-                daoStationVisit.addAll(station.getStationVisits());
-//                daoStationVisit.updateAll(station.getStationVisits());
-            }
-        }
-
-        updateClassesInDatabase(metro);
-
-
-    }
-
-
-    // Upload some results of Metro's work to some Tables in database
-    public static void addTestDataToDatabase() {
-        DaoObjectV1 daoObjectV1;
-        Metro metro = new Metro();
 
         // Create Drivers
         metro.createDrivers(10);
 
         // Upload results of Metro's work to Driver Table in database
-        daoObjectV1 = new DaoDriverV1();
-//        daoObjectV1.deleteAll();
-        daoObjectV1.addAll(metro.getDriverQueue());
+        daoObjectV2 = new DaoGenericV2(Driver.class, Integer.class);
+        daoObjectV2.deleteAll();
+        daoObjectV2.addAll(metro.getDriverQueue());
 
 
-        metro.createWagonsInDepot(100);
-
-
-        // Collect the Trains from wagons in Depot
-        metro.collectTrains(metro.getDepot(), metro.getTrains());
-
-
-
-
-        // List of Line names and number of Lines (number of names)
-        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
-
-        // Create Lines and filling lines with trains
-        metro.setLines(metro.createAndFillLines(metro.getTrains(), namesOfLines));
 
 
         // Upload results of Metro's work to Line Table in database
-        daoObjectV1 = new DaoLineV1();
-        daoObjectV1.deleteAll();
-        daoObjectV1.addAll(metro.getLines());
+        daoObjectV2 = new DaoGenericV2(Line.class, Integer.class);
+        daoObjectV2.deleteAll();
+        daoObjectV2.addAll(metro.getLines());
 
 
         // TODO
         // Upload results of Metro's work to Passenger Table in database
-        daoObjectV1 = new DaoPassengerV1();
-        daoObjectV1.deleteAll();
+        daoObjectV2 = new DaoGenericV2(Passenger.class, Integer.class);
+        daoObjectV2.deleteAll();
         for (Line line : metro.getLines()) {
             for (Station station : line.getStations())
-            daoObjectV1.addAll(station.getPassengers());
+                daoObjectV2.addAll(station.getPassengers());
         }
 
 
         // Upload results of Metro's work to Station Table in database
-        daoObjectV1 = new DaoStationV1();
-        daoObjectV1.deleteAll();
+        daoObjectV2 = new DaoGenericV2(Station.class, Integer.class);
+        daoObjectV2.deleteAll();
         for (Line line : metro.getLines()) {
-            daoObjectV1.addAll(line.getStations());
+            daoObjectV2.addAll(line.getStations());
         }
 
 
         // Upload results of Metro's work to Train Table in database
-        daoObjectV1 = new DaoTrainV1();
-        daoObjectV1.deleteAll();
+        daoObjectV2 = new DaoGenericV2(TravellerForTrain.class, Integer.class);
+        daoObjectV2.deleteAll();
 
         for (Line line : metro.getLines()) {
-            daoObjectV1.addAll(line.getTrains());
+            daoObjectV2.addAll(line.getTrains());
         }
 
 
         // Upload results of Metro's work to Wagon Table in database
-        daoObjectV1 = new DaoWagonV1();
-        daoObjectV1.deleteAll();
+        daoObjectV2 = new DaoGenericV2(Wagon.class, Integer.class);
+        daoObjectV2.deleteAll();
 
         for (Line line : metro.getLines()) {
             for (Train train : line.getTrains()) {
-                daoObjectV1.addAll(train.getWagons());
+                daoObjectV2.addAll(train.getWagons());
             }
         }
 
@@ -585,20 +337,20 @@ public class MainL {
     }
 
 
-    public static void updateClassesInDatabase(MetroWithDatabase metroWithDatabase) {
-
-        // TODO in other method
-        // Update Drivers in database
-        DaoDriverV1 daoDriver = new DaoDriverV1();
-        daoDriver.updateAll(metroWithDatabase.getDriverQueue());
-
-
+//    public static void updateClassesInDatabase(MetroWithDatabase metroWithDatabase) {
+//
 //        // TODO in other method
-//        // Update Wagons from Depot in database
-//        DaoWagonV1 daoWagon = new DaoWagonV1();
-//        daoWagon.updateAll(metro.getDepot().getWagons());
-
-    }
+//        // Update Drivers in database
+//        DaoDriverV1 daoDriver = new DaoDriverV1();
+//        daoDriver.updateAll(metroWithDatabase.getDriverQueue());
+//
+//
+////        // TODO in other method
+////        // Update Wagons from Depot in database
+////        DaoWagonV1 daoWagon = new DaoWagonV1();
+////        daoWagon.updateAll(metro.getDepot().getWagons());
+//
+//    }
 
 
     // Verifying the connection to the database

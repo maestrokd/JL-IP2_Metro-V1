@@ -40,47 +40,88 @@ public class TrainRun {
     @DatabaseField(useGetSet = true)
     private String train_name;
 
+    private String trainRunInfo;
+
 
     // Constructors
     public TrainRun() {}
 
-    public TrainRun(Train train, Queue<Driver> driverQueue) {
+    public TrainRun(Train otherTrain, Queue<Driver> driverQueue) {
 
+        trainRunInfo = "";
+        String moveDriverInfo = "";
+        this.train = otherTrain;
         // Moving the driver to the train
 
         synchronized (driverQueue) {
-        train.setDriver(driverQueue.poll());
-        System.out.println(train.getDriver().getName() + "|" + train.getDriver().getExperience());
+            while (driverQueue.isEmpty()) {
+                try {
+                    driverQueue.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+//            System.out.println("Number of drivers: " + driverQueue.size());
+            moveDriverInfo += "Number of drivers at the Queue : " + driverQueue.size() + ". ";
+
+            train.setDriver(driverQueue.poll());
+
+//            System.out.println(train.getDriver().getName());
+            moveDriverInfo += train.getDriver().getName() + " move into " + train.getName() + "\n";
+            System.out.println(moveDriverInfo);
+
+    //        System.out.println(train.getName() + "/" + train.getDriver().getName() + "|" + train.getDriver().getExperience());
+            trainRunInfo += train.getName() + "/" + train.getDriver().getName() + "|" + train.getDriver().getExperience() + "\n";
+
         }
 
 
         this.driver = train.getDriver();
-        this.line = train.getLine();
-        this.train = train;
-
         this.driver_id = this.driver.getDriver_id();
-        this.line_id = this.line.getLine_id();
-        this.train_id = this.train.getTrain_id();
-
         this.driver_name = this.driver.getName();
+
+        this.line = train.getLine();
+        this.line_id = this.line.getLine_id();
         this.line_name = this.line.getName();
+
+        this.train_id = this.train.getTrain_id();
         this.train_name = this.train.getName();
 
         // TODO now date
         this.startDate = new Date();
 
+
         line.getTrainRuns().add(this);
-        System.out.println();
-        System.out.print(this.getTrain().getName() + " - " + this.getStartDate() + "|");
+//        System.out.println();
+//        System.out.println(this.getTrain().getLine().getName() + "/" + this.getTrain().getName() + " - " + this.getStartDate() + "|");
+        trainRunInfo += this.getTrain().getLine().getName() + "/" + this.getTrain().getName() + " - " + this.getStartDate() + "|" + "\n";
+        System.out.println(trainRunInfo);
 
         trainRun();
 
         // Get driving experience and Moving the driver from the Train
-
         synchronized (driverQueue) {
-        train.getDriver().addExperience();
-        System.out.println(train.getDriver().getName() + "|" + train.getDriver().getExperience());
-        driverQueue.add(train.getDriver());
+            try {
+                train.getDriver().addExperience();
+
+            } catch (Exception e) {
+                System.out.println("\n\n" + train.getName() + "1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Why null there? And why nonexistent name of train there? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Driver: " + train.getDriver());
+                System.out.println();
+                System.out.println();
+            }
+
+            try {
+                driverQueue.add(train.getDriver());
+
+            } catch (Exception e) {
+                System.out.println("\n\n" + train.getName() + "2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Why null there? And why nonexistent name of train there? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Driver: " + train.getDriver());
+                System.out.println();
+                System.out.println();
+            }
+
+//        System.out.println(train.getDriver().getName() + "|" + train.getDriver().getExperience());
+        driverQueue.notifyAll();
         train.setDriver(null);
         }
 
@@ -163,6 +204,7 @@ public class TrainRun {
     public void setTrain_name(String train_name) {
         this.train_name = train_name;
     }
+
 
     // Methods
     public void trainRun() {

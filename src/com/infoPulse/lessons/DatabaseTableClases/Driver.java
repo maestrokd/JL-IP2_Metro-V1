@@ -64,6 +64,6 @@ public class Driver {
 
         // TODO Random in other class
         Random random = new Random();
-        experience = experience + (random.nextInt(100)-50);
+        experience = experience + (random.nextInt(100));
     }
 }

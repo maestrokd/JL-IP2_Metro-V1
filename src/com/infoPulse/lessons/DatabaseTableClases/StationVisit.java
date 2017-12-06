@@ -191,7 +191,7 @@ public class StationVisit {
 //        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers left at the station");
         visitInfo += station.getInfo() + " | " + station.getPassengers().size() + " passengers left at the station";
 
-        System.out.println(visitInfo);
+//        System.out.println(visitInfo);
     }
 
 
@@ -228,7 +228,7 @@ public class StationVisit {
 //        System.out.println(station.getInfo() + " | " + station.getPassengers().size() + " passengers who finished the trip");
         visitInfo += station.getInfo() + " | " + station.getPassengers().size() + " passengers who finished the trip\n";
 
-        System.out.println(visitInfo);
+//        System.out.println(visitInfo);
     }
 
 }

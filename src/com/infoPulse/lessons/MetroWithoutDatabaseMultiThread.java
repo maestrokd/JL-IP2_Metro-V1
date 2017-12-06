@@ -32,6 +32,31 @@ public class MetroWithoutDatabaseMultiThread {
     private Queue<Driver> driverQueue = new PriorityQueue<>(comparator);
 
 
+    public MetroWithoutDatabaseMultiThread() {
+
+
+        depot = MetroFactory.createWagonsInDepot(100);
+
+        // Collect the Trains from wagons in Depot
+        trains = MetroFactory.collectTrains(depot);
+
+
+        // Inspection of assembled trains
+        inspectionOfAssembledTrains(trains);
+
+        // Inspection of depot after Collect the Trains from wagons in Depot
+        inspectionOfDepot(depot);
+
+        inspectionOfWagonsInDepot(depot);
+
+
+        // List of Line names and number of Lines (number of names)
+        String[] namesOfLines = {"RedLine", "GreenLine", "BlueLine"};
+        // Create Lines and filling lines with trains
+        lines = MetroFactory.createAndFillLines(trains, namesOfLines);
+    }
+
+
     // Getters and Setters
     public Depot getDepot() {
         return depot;
@@ -68,9 +93,7 @@ public class MetroWithoutDatabaseMultiThread {
 
     // Methods
 
-    public void createWagonsInDepot(int numberOfWagons) {
-        depot = new Depot(numberOfWagons);
-    }
+
 
 
     // Inspection of depot
@@ -80,7 +103,6 @@ public class MetroWithoutDatabaseMultiThread {
         System.out.println("Number of wagons in the depot after the formation of trains: " + depot.getWagons().size());
         System.out.println("---------------------------------------");
     }
-
 
     // Inspection of the wagons in the depot
     public void inspectionOfWagonsInDepot(Depot depot) {
@@ -92,53 +114,6 @@ public class MetroWithoutDatabaseMultiThread {
         System.out.println("---------------------------------------");
     }
 
-
-    // Collect the Trains from wagons in Depot
-    public void collectTrains(Depot depot, LinkedList<Train> trains) {
-        System.out.println("---------------------------------------");
-        System.out.println("Number of wagons in the depot before the formation of trains: " + depot.getWagons().size());
-        while (true) {
-            if (depot.getWagons().size() < Train.maxNumberOfSubwayCarsInTrain) {
-                depot.getWagons().addAll(depot.getWagonsReturnToDepot());
-                break;
-            }
-            trains.addLast(new Train());
-            while (true) {
-
-                if (depot.getWagons().size() == 0) {
-                    try {
-                        throw new DepotEmptyException();
-                    } catch (DepotEmptyException e) {
-//                       System.out.println("Error! The wagons of the required type in the depot are over!");
-
-
-                        // Return of wagons of an unfinished train to the wagonsReturnToDepot
-                        if (trains.getLast().getWagons().size() != Train.maxNumberOfSubwayCarsInTrain) {
-                            for (Wagon wagon : trains.getLast().getWagons()) {
-                                depot.getWagons().addLast(wagon);
-                            }
-                            trains.removeLast();
-                        }
-                        break;
-                    }
-                }
-
-                trains.getLast().addWagon(depot.getWagons().removeFirst(), depot.getWagonsReturnToDepot());
-
-                if (trains.getLast().getWagons().size() == Train.maxNumberOfSubwayCarsInTrain) {
-
-                    for (Wagon wagon : trains.getLast().getWagons()) {
-                        wagon.setTrain_id(trains.getLast().getTrain_id());
-                    }
-
-                    break;
-                }
-            }
-        }
-        System.out.println("---------------------------------------");
-    }
-
-
     // Inspection of assembled trains
     public void inspectionOfAssembledTrains(LinkedList<Train> trains) {
         System.out.println("---------------------------------------");
@@ -149,6 +124,7 @@ public class MetroWithoutDatabaseMultiThread {
         }
         System.out.println("\n---------------------------------------");
     }
+
 
     public void createDrivers(int numberOfDrivers) {
         System.out.println("---------------------------------------");
@@ -173,32 +149,6 @@ public class MetroWithoutDatabaseMultiThread {
         System.out.println("---------------------------------------");
     }
 
-
-    // Create Lines and distribution of Trains along the Line
-    public LinkedList<Line> createAndFillLines(LinkedList<Train> trains, String[] namesOfLines) {
-        LinkedList<Line> lines = new LinkedList<>();
-        int numberOfLines = namesOfLines.length;
-
-        // TODO numberOfStations
-        int numberOfStations = 3;
-
-        for (int i = 0; i < numberOfLines; i++) {
-            lines.add(new Line(namesOfLines[i], numberOfStations));
-        }
-
-        while (!trains.isEmpty()) {
-            for (Line line :lines) {
-                if (!trains.isEmpty()) {
-                    line.getTrains().add(trains.pollFirst());
-                    line.getTrains().getLast().setLine(line);
-                }else {
-                    break;
-                }
-            }
-        }
-
-        return lines;
-    }
 
 
     // Travel by stations
@@ -248,7 +198,6 @@ public class MetroWithoutDatabaseMultiThread {
                 threadsEscalators.add(escalat2);
                 threadsEscalators.add(escalat3);
 
-
                 }
             }
         }
@@ -273,6 +222,9 @@ public class MetroWithoutDatabaseMultiThread {
 //            System.out.println("______________");
         }
 
+
+
+        // TODO Ending program if metro will be stop
         for (Thread thread : threadsTravellersL) {
             try {
                 thread.join();
